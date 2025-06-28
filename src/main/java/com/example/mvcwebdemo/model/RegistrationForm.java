@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 public class RegistrationForm {
 
@@ -12,6 +13,10 @@ public class RegistrationForm {
 
     @NotBlank(message = "Last Name is required")
     private String lastName;
+
+    @NotBlank(message = "Annual Income is required")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private String annualIncome;
 
     @NotBlank(message = "Country is required")
     private String country;
@@ -39,6 +44,14 @@ public class RegistrationForm {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAnnualIncome() {
+        return annualIncome;
+    }
+
+    public void setAnnualIncome(String annualIncome) {
+        this.annualIncome = annualIncome;
     }
 
     public String getCountry() {

@@ -41,6 +41,7 @@ public class WebdemoController {
         // Add form data to the model for the success page
         model.addAttribute("firstName", registrationForm.getFirstName());
         model.addAttribute("lastName", registrationForm.getLastName());
+        model.addAttribute("annualIncome", registrationForm.getAnnualIncome());
         model.addAttribute("country", registrationForm.getCountry());
         model.addAttribute("dob", registrationForm.getDob());
         model.addAttribute("email", registrationForm.getEmail());

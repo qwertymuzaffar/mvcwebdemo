@@ -23,6 +23,12 @@
         <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
         <br>
 
+        <!-- Annual Income -->
+        <label for="lastName">Annual Income:</label>
+        <input type="text" id="annualIncome" th:field="*{annualIncome}" required>
+        <span th:if="${#fields.hasErrors('annualIncome')}" th:errors="*{annualIncome}" class="error"></span>
+        <br>
+
         <!-- Country -->
         <label for="country">Country:</label>
         <select id="country" th:field="*{country}" required>
