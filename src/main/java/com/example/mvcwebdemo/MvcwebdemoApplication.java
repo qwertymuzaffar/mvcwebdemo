@@ -37,6 +37,15 @@ public class MvcwebdemoApplication {
             while (resultSet.next()) {
                 System.out.println("Name: " + resultSet.getString("Name"));
             }
+
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM Students ORDER BY GPA DESC"
+            );
+            System.out.println("Printing students with descending GPAs");
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+                System.out.println("GPA: " + resultSet.getDouble("GPA"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
