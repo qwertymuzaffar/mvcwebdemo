@@ -68,6 +68,22 @@ public class MvcwebdemoApplication {
                 System.out.println("Major: " + resultSet.getString("Major"));
                 System.out.println("Number of Students: " + resultSet.getInt("StudentCount"));
             }
+
+            // Join tables
+            resultSet = statement.executeQuery(
+                    "SELECT Students.Name, Courses.CourseName " +
+                            "FROM Students " +
+                            "INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID " +
+                            "INNER JOIN Courses ON Enrollments.CourseID = Courses.CourseID"
+            );
+
+            System.out.println("Retrieve Student Names and Their Courses");
+
+            while (resultSet.next()) {
+                System.out.println("Student: " + resultSet.getString("Name"));
+                System.out.println("Course: " + resultSet.getString("CourseName"));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
