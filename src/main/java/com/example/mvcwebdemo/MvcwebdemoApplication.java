@@ -29,6 +29,14 @@ public class MvcwebdemoApplication {
                 System.out.println("Name: " + resultSet.getString("Name"));
                 System.out.println("Major: " + resultSet.getString("Major"));
             }
+
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM Students WHERE Major = 'Computer Science'"
+            );
+            System.out.println("Students with major of Computer Science");
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
