@@ -23,6 +23,7 @@ public class MvcwebdemoApplication {
             System.out.println("connection successful!");
             // Your JDBC code here
 
+            // Retrieve information using the SELECT command
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Students");
             while (resultSet.next()) {
                 System.out.println("Student ID: " + resultSet.getInt("StudentID"));
@@ -30,6 +31,7 @@ public class MvcwebdemoApplication {
                 System.out.println("Major: " + resultSet.getString("Major"));
             }
 
+            // Filter Data with WHERE Clause
             resultSet = statement.executeQuery(
                     "SELECT * FROM Students WHERE Major = 'Computer Science'"
             );
@@ -38,6 +40,7 @@ public class MvcwebdemoApplication {
                 System.out.println("Name: " + resultSet.getString("Name"));
             }
 
+            // Sort results with ORDER BY
             resultSet = statement.executeQuery(
                     "SELECT * FROM Students ORDER BY GPA DESC"
             );
@@ -47,12 +50,23 @@ public class MvcwebdemoApplication {
                 System.out.println("GPA: " + resultSet.getDouble("GPA"));
             }
 
+            // Limit Results
             resultSet = statement.executeQuery(
                     "SELECT * FROM Students ORDER BY GPA DESC LIMIT 5"
             );
             System.out.println("Limiting resultset to 5");
             while (resultSet.next()) {
                 System.out.println("Name: " + resultSet.getString("Name"));
+            }
+
+            // Aggregate data with GROUP BY
+            resultSet = statement.executeQuery(
+                    "SELECT Major, COUNT(*) AS StudentCount FROM Students GROUP BY Major"
+            );
+            System.out.println("Count students by major");
+            while (resultSet.next()) {
+                System.out.println("Major: " + resultSet.getString("Major"));
+                System.out.println("Number of Students: " + resultSet.getInt("StudentCount"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
