@@ -46,6 +46,14 @@ public class MvcwebdemoApplication {
                 System.out.println("Name: " + resultSet.getString("Name"));
                 System.out.println("GPA: " + resultSet.getDouble("GPA"));
             }
+
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM Students ORDER BY GPA DESC LIMIT 5"
+            );
+            System.out.println("Limiting resultset to 5");
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
