@@ -22,6 +22,13 @@ public class MvcwebdemoApplication {
             Statement statement = conn.createStatement();
             System.out.println("connection successful!");
             // Your JDBC code here
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Students");
+            while (resultSet.next()) {
+                System.out.println("Student ID: " + resultSet.getInt("StudentID"));
+                System.out.println("Name: " + resultSet.getString("Name"));
+                System.out.println("Major: " + resultSet.getString("Major"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
