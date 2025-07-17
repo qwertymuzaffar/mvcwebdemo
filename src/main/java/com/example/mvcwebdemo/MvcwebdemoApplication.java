@@ -84,6 +84,15 @@ public class MvcwebdemoApplication {
                 System.out.println("Course: " + resultSet.getString("CourseName"));
             }
 
+
+            // Handle NULL values
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM Students WHERE Major IS NULL"
+            );
+            System.out.println("Retrieve Students Without a Declared Major");
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
