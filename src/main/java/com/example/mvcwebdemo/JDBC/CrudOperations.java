@@ -57,8 +57,17 @@ public class CrudOperations {
 
     public static void readBooksByGenre(Connection conn) throws SQLException {
         System.out.println("------------------------");
-        System.out.println("Read books by genre");
+        System.out.println("Retrieving books by genre: Programming");
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM books WHERE Genre = ?")) {
+            ps.setString(1, "Programming");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("Title: " + rs.getString("Title"));
+            }
+        }
     }
+
     public static void paginateBooks(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Paginate books by price");
