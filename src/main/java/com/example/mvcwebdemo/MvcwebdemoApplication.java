@@ -104,7 +104,24 @@ public class MvcwebdemoApplication {
     public static void insertStudentWithGeneratedKey(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Insert student and retrieve generated key");
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(
+                "INSERT INTO Students (Name, Major, GPA) VALUES (?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, "John Doe");
+            preparedStatement.setString(2, "Mathematics");
+            preparedStatement.setDouble(3, 3.6);
+
+            preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int newStudentID = generatedKeys.getInt(1);
+                System.out.println("Generated Student ID: " + newStudentID);
+            }
+        }
     }
+
     public static void simulateSQLError(Connection conn) {
         System.out.println("------------------------");
         System.out.println("Simulating SQL Error");
