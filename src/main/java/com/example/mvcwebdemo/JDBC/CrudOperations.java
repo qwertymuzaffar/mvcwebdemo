@@ -28,8 +28,20 @@ public class CrudOperations {
 
     public static void insertBook(Connection conn) throws SQLException {
         System.out.println("------------------------");
-        System.out.println("Insert data into the books table");
+        System.out.println("Inserting a book using PreparedStatement");
+        try (PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO books (Title, Author, Price, Genre, PublicationDate, PublisherID) VALUES (?, ?, ?, ?, ?, ?)")) {
+            ps.setString(1, "Advanced Java");
+            ps.setString(2, "Jane Doe");
+            ps.setDouble(3, 45.99);
+            ps.setString(4, "Programming");
+            ps.setDate(5, java.sql.Date.valueOf("2023-01-10"));
+            ps.setInt(6, 1);
+            int rows = ps.executeUpdate();
+            System.out.println("Rows inserted: " + rows);
+        }
     }
+
     public static void readAllBooks(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Read all books");
