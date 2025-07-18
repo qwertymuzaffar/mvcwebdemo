@@ -48,7 +48,17 @@ public class MvcwebdemoApplication {
     public static void updateStudent(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Update Students with GPA of 3.9 and name of Alice");
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(
+                "UPDATE Students SET GPA = ? WHERE Name = ?")) {
+            preparedStatement.setDouble(1, 3.9);
+            preparedStatement.setString(2, "Alice Johnson");
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Rows updated: " + rowsAffected);
+        }
     }
+
     public static void getStudentsByMajor(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Get all students with major of Computer Science");
