@@ -126,5 +126,11 @@ public class CrudOperations {
     public static void simulateSQLError(Connection conn) {
         System.out.println("------------------------");
         System.out.println("Simulating SQL Error");
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM NonExistentTable")) {
+            ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
