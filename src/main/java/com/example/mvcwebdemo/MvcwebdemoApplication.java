@@ -62,7 +62,19 @@ public class MvcwebdemoApplication {
     public static void getStudentsByMajor(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Get all students with major of Computer Science");
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(
+                "SELECT * FROM Students WHERE Major = ?")) {
+            preparedStatement.setString(1, "Computer Science");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+                System.out.println("GPA: " + resultSet.getDouble("GPA"));
+            }
+        }
     }
+
     public static void callGetStudentsByMajor(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Calling stored procedure GetStudentsByMajor");
