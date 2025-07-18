@@ -80,6 +80,7 @@ public class CrudOperations {
             }
         }
     }
+
     public static void updateBookPrice(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Updating book price");
@@ -91,6 +92,7 @@ public class CrudOperations {
             System.out.println("Rows updated: " + rows);
         }
     }
+
     public static void deleteBooksByGenre(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Deleting books in genre: Programming");
@@ -103,10 +105,24 @@ public class CrudOperations {
             System.out.println("Rows deleted: " + rows);
         }
     }
+
     public static void callAddBookProcedure(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Calling stored procedure AddBook");
+
+        try (CallableStatement cs = conn.prepareCall("{CALL AddBook(?, ?, ?, ?, ?, ?)}")) {
+            cs.setString(1, "Advanced Java");
+            cs.setString(2, "Jane Doe");
+            cs.setDouble(3, 45.99);
+            cs.setString(4, "Programming");
+            cs.setDate(5, java.sql.Date.valueOf("2023-01-10"));
+            cs.setInt(6, 1);
+
+            cs.execute();
+            System.out.println("Book added successfully using stored procedure.");
+        }
     }
+
     public static void simulateSQLError(Connection conn) {
         System.out.println("------------------------");
         System.out.println("Simulating SQL Error");
