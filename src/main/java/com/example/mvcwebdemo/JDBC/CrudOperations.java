@@ -82,7 +82,14 @@ public class CrudOperations {
     }
     public static void updateBookPrice(Connection conn) throws SQLException {
         System.out.println("------------------------");
-        System.out.println("Update book price");
+        System.out.println("Updating book price");
+        try (PreparedStatement ps = conn.prepareStatement(
+                "UPDATE books SET Price = ? WHERE Title = ?")) {
+            ps.setDouble(1, 49.99);
+            ps.setString(2, "Advanced Java");
+            int rows = ps.executeUpdate();
+            System.out.println("Rows updated: " + rows);
+        }
     }
     public static void deleteBooksByGenre(Connection conn) throws SQLException {
         System.out.println("------------------------");
