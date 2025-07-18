@@ -70,7 +70,15 @@ public class CrudOperations {
 
     public static void paginateBooks(Connection conn) throws SQLException {
         System.out.println("------------------------");
-        System.out.println("Paginate books by price");
+        System.out.println("Paginating books by price (LIMIT 5 OFFSET 0)");
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM books ORDER BY Price DESC LIMIT 5 OFFSET 0")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("Title: " + rs.getString("Title"));
+                System.out.println("Price: " + rs.getDouble("Price"));
+            }
+        }
     }
     public static void updateBookPrice(Connection conn) throws SQLException {
         System.out.println("------------------------");
