@@ -125,6 +125,14 @@ public class MvcwebdemoApplication {
     public static void simulateSQLError(Connection conn) {
         System.out.println("------------------------");
         System.out.println("Simulating SQL Error");
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(
+                "SELECT * FROM NonExistentTable")) {
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
