@@ -93,7 +93,15 @@ public class CrudOperations {
     }
     public static void deleteBooksByGenre(Connection conn) throws SQLException {
         System.out.println("------------------------");
-        System.out.println("Delete books by genre");
+        System.out.println("Deleting books in genre: Programming");
+
+        try (PreparedStatement ps = conn.prepareStatement(
+                "DELETE FROM books WHERE Genre = ?")) {
+            ps.setString(1, "Programming");
+
+            int rows = ps.executeUpdate();
+            System.out.println("Rows deleted: " + rows);
+        }
     }
     public static void callAddBookProcedure(Connection conn) throws SQLException {
         System.out.println("------------------------");
