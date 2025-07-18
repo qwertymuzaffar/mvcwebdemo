@@ -78,7 +78,18 @@ public class MvcwebdemoApplication {
     public static void callGetStudentsByMajor(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Calling stored procedure GetStudentsByMajor");
+
+        try (CallableStatement callableStatement = conn.prepareCall("{CALL GetStudentsByMajor(?)}")) {
+            callableStatement.setString(1, "Computer Science");
+
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("Name: " + resultSet.getString("Name"));
+                System.out.println("GPA: " + resultSet.getDouble("GPA"));
+            }
+        }
     }
+
     public static void callGetAverageGPA(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Calling stored procedure GetAverageGPA");
