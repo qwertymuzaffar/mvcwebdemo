@@ -93,7 +93,14 @@ public class MvcwebdemoApplication {
     public static void callGetAverageGPA(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Calling stored procedure GetAverageGPA");
+        try (CallableStatement callableStatement = conn.prepareCall("{CALL GetAverageGPA(?)}")) {
+            callableStatement.registerOutParameter(1, java.sql.Types.DOUBLE);
+            callableStatement.execute();
+            double avgGPA = callableStatement.getDouble(1);
+            System.out.println("Average GPA: " + avgGPA);
+        }
     }
+
     public static void insertStudentWithGeneratedKey(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Insert student and retrieve generated key");
