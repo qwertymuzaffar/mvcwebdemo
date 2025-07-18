@@ -35,7 +35,16 @@ public class MvcwebdemoApplication {
     public static void insertStudent(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Insert data into the Students table");
+        try (PreparedStatement preparedStatement = conn.prepareStatement(
+                "INSERT INTO Students (Name, Major, GPA) VALUES (?, ?, ?)")) {
+            preparedStatement.setString(1, "Alice Johnson");
+            preparedStatement.setString(2, "Computer Science");
+            preparedStatement.setDouble(3, 3.8);
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Rows inserted: " + rowsAffected);
+        }
     }
+
     public static void updateStudent(Connection conn) throws SQLException {
         System.out.println("------------------------");
         System.out.println("Update Students with GPA of 3.9 and name of Alice");
