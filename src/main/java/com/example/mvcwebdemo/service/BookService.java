@@ -34,4 +34,8 @@ public class BookService {
         book.setPrice(bookDetails.getPrice());
         return bookRepository.save(book);
     }
+
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
 }
