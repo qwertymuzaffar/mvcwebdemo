@@ -26,4 +26,12 @@ public class BookService {
     public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
     }
+
+    public Book updateBook(Long id, Book bookDetails) {
+        Book book = bookRepository.findById(id).orElseThrow();
+        book.setTitle(bookDetails.getTitle());
+        book.setAuthor(bookDetails.getAuthor());
+        book.setPrice(bookDetails.getPrice());
+        return bookRepository.save(book);
+    }
 }
