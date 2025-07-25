@@ -1,9 +1,13 @@
 package com.example.mvcwebdemo.controller;
 
+import com.example.mvcwebdemo.dao.BookRepository;
 import com.example.mvcwebdemo.entity.Book;
 import com.example.mvcwebdemo.service.BookService;
+import com.example.mvcwebdemo.validator.BookValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +19,23 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    private final BookValidator bookValidator = new BookValidator();
+
     // Create a new book
 
     @PostMapping("/addBook")
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        Book savedBook = bookService.saveBook(book);
-        return ResponseEntity.ok(savedBook);
+    public String addBook(@Valid @RequestBody Book book, BindingResult result) {
+        bookValidator.validate(book, result);
+
+        if (result.hasErrors()) {
+            return "Validation failed: " + result.getAllErrors();
+        }
+        bookRepository.save(book);
+        return "Book added successfully";
     }
 
     // Get all books
