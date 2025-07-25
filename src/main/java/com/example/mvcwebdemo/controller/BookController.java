@@ -2,10 +2,12 @@ package com.example.mvcwebdemo.controller;
 
 import com.example.mvcwebdemo.dao.BookRepository;
 import com.example.mvcwebdemo.entity.Book;
+import com.example.mvcwebdemo.response.ApiResponse;
 import com.example.mvcwebdemo.service.BookService;
 import com.example.mvcwebdemo.validator.BookValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -63,5 +65,12 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/createBookResponse")
+    public ResponseEntity<ApiResponse<Book>> createBookResponse(@RequestBody Book book) {
+        Book savedBook = bookRepository.save(book);
+        ApiResponse<Book> response = new ApiResponse<>("success", "Book created successfully", savedBook);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
