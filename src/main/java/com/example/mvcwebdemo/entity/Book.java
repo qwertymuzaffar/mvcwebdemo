@@ -1,9 +1,7 @@
 package com.example.mvcwebdemo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Book {
@@ -11,11 +9,18 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Size(min = 2, max = 100)
     private String title;
+
+    @NotNull
     private String author;
+
+    @Min(1)
     private double price;
 
-    // Getters and Setters
+    // Getters and setters
     public Long getId() {
         return id;
     }
